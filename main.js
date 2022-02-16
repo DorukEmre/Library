@@ -1,26 +1,22 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, ref) {
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
+    this.ref = ref
 }
 
-Book.prototype.info = function() {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`
+function addBookToLibrary(title, author, pages, read, ref) {
+    myLibrary.push(new Book(title, author, pages, read, ref)) 
 }
 
-
-
-function addBookToLibrary(title, author, pages, read) {
-    myLibrary.push(new Book(title, author, pages, read)) 
-}
-
-function createNewCard(arrayNumber) {
+function createNewCard(refNumber) {
     
     const section = document.createElement('section');
-    section.className = `card card${arrayNumber}`;
+    section.className = `card`;
+    section.dataset.ref = `${refNumber}`;
 
     const pTitle =  document.createElement('p');
     pTitle.textContent = "Title: ";
@@ -39,7 +35,7 @@ function createNewCard(arrayNumber) {
     pModRead =  document.createElement('p');
     pModRead.className = 'read';
     pDelete =  document.createElement('p');
-    pDelete.className = `delete delete${arrayNumber}`;
+    pDelete.className = `delete`;
     pDelete.textContent = "Delete"
 
     const cardsContainer = document.querySelector('.cards-container');
@@ -54,90 +50,67 @@ function createNewCard(arrayNumber) {
     section.appendChild(pRead);
     section.appendChild(pModRead); 
     section.appendChild(pDelete);  
+
+    // EventListener to delete card added when card is created
+    const deleteButton = section.querySelector(".delete");
+    deleteButton.addEventListener("click", function(e) {
+            deleteCard(parseInt(deleteButton.parentElement.dataset.ref)); 
+        })
 }
 
-function fillCard(arrayNumber) {
-    pModTitle.textContent = myLibrary[arrayNumber].title;
-    pModAuthor.textContent = myLibrary[arrayNumber].author;
-    pModPages.textContent = myLibrary[arrayNumber].pages;
-    pModRead.textContent = myLibrary[arrayNumber].read;
+function fillCard(refNumber) {
+    pModTitle.textContent = myLibrary[refNumber].title;
+    pModAuthor.textContent = myLibrary[refNumber].author;
+    pModPages.textContent = myLibrary[refNumber].pages;
+    pModRead.textContent = myLibrary[refNumber].read;
 }
 
-function displayBook(arrayNumber) {
-    createNewCard(arrayNumber);
-    fillCard(arrayNumber);    
+function displayBook(refNumber) {
+    createNewCard(refNumber);
+    fillCard(refNumber);    
 }
 
-function displayForm() {
+function displayAddBookForm() {
     const addForm = document.querySelector('.add-form');
     addForm.classList.add("popup")
 }
-function hideForm() {
+function hideAddBookForm() {
+    document.getElementById('add-book').reset(); // clear form
     const addForm = document.querySelector('.popup');
     addForm.classList.remove("popup")
 }
 
-addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '295', 'not read yet')
-addBookToLibrary('The Purple Teddy Bear', 'J. Tesch-Cassady', '36', 'not read yet')
-addBookToLibrary('The Thursday Murder Club', 'R. Osman', '400', 'not read yet')
-addBookToLibrary('Time for dinner', 'E. Raymond', '300', 'not read yet')
-
-function displayLibrary() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        displayBook(i)
-    }
-} 
-
-
-function addUserBook(title, author, pages, read) {
-    console.log("Submit hit");
-    console.log(myLibrary.length-1)
+function userAddBook(title, author, pages, read) {
+    console.log("Submit button clicked");
 
     const form = document.getElementById('add-book');
     const titleInput = form.elements['form-title']
     const authorInput = form.elements['form-author']
     const pagesInput = form.elements['form-pages']
     const readInput = form.elements['form-read']
-    
-    console.log(titleInput.value)
-    console.log(authorInput.value)
-    console.log(pagesInput.value)
-    console.log(readInput.value)
+    // (ref of new book) is (ref of the last item of myLibrary +1)
+    const refNumberOfNewBook = myLibrary[myLibrary.length-1].ref + 1;
 
-    addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value);
+    addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value, refNumberOfNewBook);
     displayBook(myLibrary.length-1);
-    document.getElementById('add-book').reset();
-    hideForm();
-
-
-// window.localStorage.setItem('user', JSON.stringify(person));
+    hideAddBookForm();
 }
-function deleteCard(arrayNumber) {
-    console.log(`delete ${arrayNumber}`)
-    console.table(myLibrary)
+    
+
+function deleteCard(refNumber) {
+    console.log(`delete ref ${refNumber}`)
+    
+    let itemToDelete = myLibrary.find(item => item.ref === refNumber);
+    let arrayNumber = myLibrary.indexOf(itemToDelete);
     myLibrary.splice(arrayNumber, 1)
-    console.table(myLibrary)
 
-    const cardToDelete = document.querySelector(`.card${arrayNumber}`);
+    const cardToDelete = document.querySelector(`[data-ref="${refNumber}"]`);
     cardToDelete.remove();
-
 }
 
-displayLibrary()
-
-document.querySelector(".add-button").addEventListener("click", displayForm); 
-document.querySelector(".cancel").addEventListener("click", hideForm); 
-
-document.querySelector(".submit").addEventListener("click", addUserBook); 
-const deleteButtons = document.querySelectorAll(".delete");
-
-deleteButtons.forEach((deleteButton) => {
-
-    deleteButton.addEventListener("click", function(e) {
-    deleteCard(deleteButton.classList.value.slice(-1)); 
-    })
-})
-
+document.querySelector(".add-button").addEventListener("click", displayAddBookForm); 
+document.querySelector(".cancel").addEventListener("click", hideAddBookForm); 
+document.querySelector(".submit").addEventListener("click", userAddBook); 
 
 const form = document.querySelector('form');
 
@@ -145,3 +118,19 @@ const form = document.querySelector('form');
 form.addEventListener('submit', function(e) {
     e.preventDefault();
   });
+
+
+
+// demo books
+addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '295', 'not read yet', 0)
+addBookToLibrary('The Purple Teddy Bear', 'J. Tesch-Cassady', '36', 'not read yet', 1)
+addBookToLibrary('The Thursday Murder Club', 'R. Osman', '400', 'not read yet', 2)
+addBookToLibrary('Time for dinner', 'E. Raymond', '300', 'not read yet', 3)
+
+function displayLibrary() {
+    for (let i = 0; i < myLibrary.length; i++) {
+        displayBook(myLibrary[i].ref)
+    }
+} 
+
+displayLibrary()
