@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet"> 
+
+    <title>Library project</title>
+</head>
+<body>
+    <header>
+        
+        <button class="add-button">Add book</button>
+
+        <section class="add-form">
+            <form action="" id="add-book">
+                <label>Enter a book title: 
+                    <input type="text" name="form-title" id="form-title" required></label>
+                <label>Enter the name of the author: 
+                    <input type="text" name="form-author" id="form-author" required></label>
+                <label>Enter the number of pages: 
+                    <input type="number" name="form-pages" id="form-pages" pattern="[0-9]" required></label>
+                <label>
+                    <p>Select if book read: </p>
+                    <div>
+                        <span>Yes </span>
+                        <input type="radio" name="form-read" id="form-read" value="Yes" checked>
+                    </div>
+                    <div>
+                        <span>No </span>
+                        <input type="radio" name="form-read" id="form-read" value="No">
+                    </div>
+                </label>
+                <div>
+                    <button class="cancel" type="button">Cancel</button>
+                    <button class="submit" type="submit">Submit</button>
+                </div>
+            </form>
+        </section>  
+              
+    </header>
+
+    <main>        
+        <section class="container">
+            <section class="cards-container">
+            </section>
+        </section>
+    </main>
+    
+</body>
+</html>
+
+                

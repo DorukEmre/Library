@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: #003803;
+    color: antiquewhite;
+    font-size: 1.1rem;
+}
+header {
+    width: 100%;
+    height: 75px;
+}
+header > button {
+    width: 117px;
+    font-size: 1.2rem;
+    background: #1D595C;
+    color: antiquewhite;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 10px;
+    z-index: 1000;
+    position: absolute;
+}
+
+header .add-form {
+    display: block;
+    width: 260px;
+    padding: 60px 20px 15px 15px;
+    position: absolute;
+    z-index: 5;
+    top: 18px;
+    left: 18px;
+    background: #1D595C;
+    color: antiquewhite;
+    border: none;
+    border-radius: 3px;
+    visibility: hidden;
+}
+header .popup {
+    visibility: visible;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.add-form form {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.add-form div {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.add-form .cancel {
+    background: #333d3d;
+    color: antiquewhite;
+    width: fit-content;
+    font-size: 1rem;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin-right: 10px;
+}
+.add-form .submit {
+    background: #001718;
+    color: antiquewhite;
+    width: fit-content;
+    font-size: 1rem;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    align-self: flex-end;
+}
+.add-form input {
+    max-width: 200px;
+    display: block;
+    padding: 8px;
+    margin: 7px 0 15px auto;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+}
+.add-form label:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    column-gap: 10px;
+}
+.add-form label:last-of-type p {
+    flex: 0 0 100%;
+    color: antiquewhite;
+    font-weight: 400;
+}
+.add-form label:last-of-type div {
+    align-items: center;
+    margin: 0 0 15px;
+}
+.add-form label:last-of-type span {
+}
+.add-form label:last-of-type div input {
+    margin: 0 0 0 5px;
+
+}
+
+
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 20px;
+
+}
+.cards-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+.card {
+    flex: 0.2 0 auto;
+    width: 200px;
+    background: #0D5512;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1;
+    box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.3);
+}
+.card p:last-of-type {
+    margin-left: auto;
+    width: fit-content;
+    background: #98602F;
+    color: antiquewhite;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 12px;
+
+}
+p {
+    margin: 0;
+    color: #98602F;
+    font-weight: 600;
+}
+.title, .author, .pages, .read {
+    margin: 4px 0 15px;
+    color: antiquewhite;
+}
