@@ -58,16 +58,19 @@ function createNewCard(refNumber) {
         })
 }
 
-function fillCard(refNumber) {
-    pModTitle.textContent = myLibrary[refNumber].title;
-    pModAuthor.textContent = myLibrary[refNumber].author;
-    pModPages.textContent = myLibrary[refNumber].pages;
-    pModRead.textContent = myLibrary[refNumber].read;
+function fillCard(arrayNumber) {
+    pModTitle.textContent = myLibrary[arrayNumber].title;
+    pModAuthor.textContent = myLibrary[arrayNumber].author;
+    pModPages.textContent = myLibrary[arrayNumber].pages;
+    pModRead.textContent = myLibrary[arrayNumber].read;
 }
 
 function displayBook(refNumber) {
+    // Finds index number in the array based on ref Number
+    let itemToAdd = myLibrary.find(item => item.ref === refNumber);
+    let arrayNumber = myLibrary.indexOf(itemToAdd);
     createNewCard(refNumber);
-    fillCard(refNumber);    
+    fillCard(arrayNumber);    
 }
 
 function displayAddBookForm() {
@@ -88,12 +91,17 @@ function userAddBook(title, author, pages, read) {
     const authorInput = form.elements['form-author']
     const pagesInput = form.elements['form-pages']
     const readInput = form.elements['form-read']
-    // (ref of new book) is (ref of the last item of myLibrary +1)
-    const refNumberOfNewBook = myLibrary[myLibrary.length-1].ref + 1;
+
+    let refNumberOfNewBook = 0;
+    // (ref of new book) is (highest ref of myLibrary + 1)
+    if (myLibrary.length > 0) {
+        refNumberOfNewBook = (myLibrary.reduce((a, b) => (a.ref > b.ref) ? a : b).ref) + 1;
+    }
 
     addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value, refNumberOfNewBook);
-    displayBook(myLibrary.length-1);
+    displayBook(refNumberOfNewBook);
     hideAddBookForm();
+    console.table(myLibrary)
 }
     
 
@@ -124,7 +132,7 @@ form.addEventListener('submit', function(e) {
 // demo books
 addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '295', 'not read yet', 0)
 addBookToLibrary('The Purple Teddy Bear', 'J. Tesch-Cassady', '36', 'not read yet', 1)
-addBookToLibrary('The Thursday Murder Club', 'R. Osman', '400', 'not read yet', 2)
+addBookToLibrary('The Thursday Murder Club', 'R. Osman Dasdoiahds Fajodihasdohsa foudshpfiusahgf', '400', 'not read yet', 2)
 addBookToLibrary('Time for dinner', 'E. Raymond', '300', 'not read yet', 3)
 
 function displayLibrary() {

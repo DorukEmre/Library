@@ -98,11 +98,8 @@ header .popup {
     align-items: center;
     margin: 0 0 15px;
 }
-.add-form label:last-of-type span {
-}
 .add-form label:last-of-type div input {
     margin: 0 0 0 5px;
-
 }
 
 
