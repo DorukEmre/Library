@@ -16,9 +16,9 @@
 <body>
     <header>
         
-        <button class="add-button">Add book</button>
+        <button class="add-book-button">Add book</button>
 
-        <section class="add-form">
+        <section class="add-form-section">
             <form action="" id="add-book">
                 <label>Enter a book title: 
                     <input type="text" name="form-title" id="form-title" required></label>
@@ -26,17 +26,17 @@
                     <input type="text" name="form-author" id="form-author" required></label>
                 <label>Enter the number of pages: 
                     <input type="number" name="form-pages" id="form-pages" pattern="[0-9]" required></label>
-                <label>
+                <section>
                     <p>Select if book read: </p>
-                    <div>
+                    <label>
                         <span>Yes </span>
-                        <input type="radio" name="form-read" id="form-read" value="Yes" checked>
-                    </div>
-                    <div>
+                        <input type="radio" name="form-read" id="form-read-yes" value="Yes" checked>
+                    </label>
+                    <label>
                         <span>No </span>
-                        <input type="radio" name="form-read" id="form-read" value="No">
-                    </div>
-                </label>
+                        <input type="radio" name="form-read" id="form-read-no" value="No">
+                    </label>
+                </section>
                 <div>
                     <button class="cancel" type="button">Cancel</button>
                     <button class="submit" type="submit">Submit</button>

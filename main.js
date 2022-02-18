@@ -12,7 +12,10 @@ function addBookToLibrary(title, author, pages, read, ref) {
     myLibrary.push(new Book(title, author, pages, read, ref)) 
 }
 
-function createNewCard(refNumber) {
+function displayBook(refNumber) {
+    // Find index number in the array based on ref Number
+    const itemToAdd = myLibrary.find(item => item.ref === refNumber);
+    const arrayNumber = myLibrary.indexOf(itemToAdd);
     
     const section = document.createElement('section');
     section.className = `card`;
@@ -20,21 +23,24 @@ function createNewCard(refNumber) {
 
     const pTitle =  document.createElement('p');
     pTitle.textContent = "Title: ";
-    pModTitle =  document.createElement('p');
+    const pModTitle =  document.createElement('p');
     pModTitle.className = 'title';
     const pAuthor =  document.createElement('p');
     pAuthor.textContent = "Author: "
-    pModAuthor =  document.createElement('p');
+    const pModAuthor =  document.createElement('p');
     pModAuthor.className = 'author';
     const pPages =  document.createElement('p');
     pPages.textContent = "Pages: "
-    pModPages =  document.createElement('p');
+    const pModPages =  document.createElement('p');
     pModPages.className = 'pages';
     const pRead =  document.createElement('p');
     pRead.textContent = "Read: "
-    pModRead =  document.createElement('p');
+    const pModRead =  document.createElement('p');
     pModRead.className = 'read';
-    pDelete =  document.createElement('p');
+    const pEdit =  document.createElement('p');
+    pEdit.className = 'edit';
+    pEdit.textContent = "[Edit]"
+    const pDelete =  document.createElement('p');
     pDelete.className = `delete`;
     pDelete.textContent = "Delete"
 
@@ -49,32 +55,29 @@ function createNewCard(refNumber) {
     section.appendChild(pModPages);
     section.appendChild(pRead);
     section.appendChild(pModRead); 
+    section.appendChild(pEdit);
     section.appendChild(pDelete);  
+
+    pModTitle.textContent = myLibrary[arrayNumber].title;
+    pModAuthor.textContent = myLibrary[arrayNumber].author;
+    pModPages.textContent = myLibrary[arrayNumber].pages;
+    pModRead.textContent = myLibrary[arrayNumber].read;
 
     // EventListener to delete card added when card is created
     const deleteButton = section.querySelector(".delete");
     deleteButton.addEventListener("click", function(e) {
             deleteCard(parseInt(deleteButton.parentElement.dataset.ref)); 
         })
+    // EventListener to edit card read status
+    const edit = section.querySelector(".edit");
+    edit.addEventListener("click", function(e) {
+        editReadStatus(parseInt(edit.parentElement.dataset.ref)); 
+    })
 }
 
-function fillCard(arrayNumber) {
-    pModTitle.textContent = myLibrary[arrayNumber].title;
-    pModAuthor.textContent = myLibrary[arrayNumber].author;
-    pModPages.textContent = myLibrary[arrayNumber].pages;
-    pModRead.textContent = myLibrary[arrayNumber].read;
-}
-
-function displayBook(refNumber) {
-    // Finds index number in the array based on ref Number
-    let itemToAdd = myLibrary.find(item => item.ref === refNumber);
-    let arrayNumber = myLibrary.indexOf(itemToAdd);
-    createNewCard(refNumber);
-    fillCard(arrayNumber);    
-}
 
 function displayAddBookForm() {
-    const addForm = document.querySelector('.add-form');
+    const addForm = document.querySelector('.add-form-section');
     addForm.classList.add("popup")
 }
 function hideAddBookForm() {
@@ -84,8 +87,6 @@ function hideAddBookForm() {
 }
 
 function userAddBook(title, author, pages, read) {
-    console.log("Submit button clicked");
-
     const form = document.getElementById('add-book');
     const titleInput = form.elements['form-title']
     const authorInput = form.elements['form-author']
@@ -101,22 +102,33 @@ function userAddBook(title, author, pages, read) {
     addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value, refNumberOfNewBook);
     displayBook(refNumberOfNewBook);
     hideAddBookForm();
-    console.table(myLibrary)
 }
     
+function editReadStatus(refNumber) {
+    const itemToEdit = myLibrary.find(item => item.ref === refNumber);
+    const arrayNumber = myLibrary.indexOf(itemToEdit);
+
+    if (myLibrary[arrayNumber].read === "Yes") {
+        myLibrary[arrayNumber].read = "No"
+    } else if (myLibrary[arrayNumber].read === "No") {
+        myLibrary[arrayNumber].read = "Yes"
+    }
+    
+    const cardToEdit = document.querySelector(`[data-ref="${refNumber}"]`);
+    const pModReadToEdit = cardToEdit.querySelector(".read");
+    pModReadToEdit.textContent = myLibrary[arrayNumber].read;
+}
 
 function deleteCard(refNumber) {
-    console.log(`delete ref ${refNumber}`)
-    
-    let itemToDelete = myLibrary.find(item => item.ref === refNumber);
-    let arrayNumber = myLibrary.indexOf(itemToDelete);
+    const itemToDelete = myLibrary.find(item => item.ref === refNumber);
+    const arrayNumber = myLibrary.indexOf(itemToDelete);
     myLibrary.splice(arrayNumber, 1)
 
     const cardToDelete = document.querySelector(`[data-ref="${refNumber}"]`);
     cardToDelete.remove();
 }
 
-document.querySelector(".add-button").addEventListener("click", displayAddBookForm); 
+document.querySelector(".add-book-button").addEventListener("click", displayAddBookForm); 
 document.querySelector(".cancel").addEventListener("click", hideAddBookForm); 
 document.querySelector(".submit").addEventListener("click", userAddBook); 
 
@@ -127,13 +139,11 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
   });
 
-
-
 // demo books
-addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '295', 'not read yet', 0)
-addBookToLibrary('The Purple Teddy Bear', 'J. Tesch-Cassady', '36', 'not read yet', 1)
-addBookToLibrary('The Thursday Murder Club', 'R. Osman Dasdoiahds Fajodihasdohsa foudshpfiusahgf', '400', 'not read yet', 2)
-addBookToLibrary('Time for dinner', 'E. Raymond', '300', 'not read yet', 3)
+addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '310', 'No', 0)
+addBookToLibrary('A Tale of Two Cities', 'Charles Dickens', '544', 'No', 1)
+addBookToLibrary('Harry Potter and the Philosopher\'s Stone', 'J. K. Rowling', '223', 'Yes', 2)
+addBookToLibrary('The Little Prince', 'Antoine de Saint-Exupéry', '96', 'No', 3)
 
 function displayLibrary() {
     for (let i = 0; i < myLibrary.length; i++) {

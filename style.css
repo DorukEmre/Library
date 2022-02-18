@@ -25,7 +25,7 @@ header > button {
     position: absolute;
 }
 
-header .add-form {
+header .add-form-section {
     display: block;
     width: 260px;
     padding: 60px 20px 15px 15px;
@@ -44,18 +44,18 @@ header .popup {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.add-form form {
+.add-form-section form {
     display: flex;
     height: fit-content;
     flex-direction: column;
     justify-content: space-between;
 }
-.add-form div {
+.add-form-section div {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
 }
-.add-form .cancel {
+.add-form-section .cancel {
     background: #333d3d;
     color: antiquewhite;
     width: fit-content;
@@ -65,7 +65,10 @@ header .popup {
     padding: 6px 10px;
     margin-right: 10px;
 }
-.add-form .submit {
+.add-form-section .cancel:hover {
+    background: #546464;
+}
+.add-form-section .submit {
     background: #001718;
     color: antiquewhite;
     width: fit-content;
@@ -75,7 +78,10 @@ header .popup {
     padding: 10px 20px;
     align-self: flex-end;
 }
-.add-form input {
+.add-form-section .submit:hover {
+    background: #123638;
+}
+.add-form-section input {
     max-width: 200px;
     display: block;
     padding: 8px;
@@ -83,23 +89,23 @@ header .popup {
     border: 1px solid lightgray;
     border-radius: 3px;
 }
-.add-form label:last-of-type {
+.add-form-section section {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    column-gap: 10px;
+    column-gap: 15px;
 }
-.add-form label:last-of-type p {
+.add-form-section section p {
     flex: 0 0 100%;
     color: antiquewhite;
     font-weight: 400;
 }
-.add-form label:last-of-type div {
-    align-items: center;
+.add-form-section section label {
     margin: 0 0 15px;
 }
-.add-form label:last-of-type div input {
-    margin: 0 0 0 5px;
+.add-form-section section input {
+    display: inline-block;
+    margin: 0;
 }
 
 
@@ -107,7 +113,6 @@ header .popup {
     max-width: 980px;
     margin: 0 auto;
     padding: 20px;
-
 }
 .cards-container {
     width: 100%;
@@ -117,8 +122,8 @@ header .popup {
     gap: 20px;
 }
 .card {
-    flex: 0.2 0 auto;
-    width: 200px;
+    flex: 0.1 0 auto;
+    width: 220px;
     background: #0D5512;
     padding: 20px;
     border-radius: 10px;
@@ -148,7 +153,17 @@ p {
     color: #98602F;
     font-weight: 600;
 }
-.title, .author, .pages, .read {
+.title, .author, .pages, .read, .edit {
     margin: 4px 0 15px;
     color: antiquewhite;
+}
+.read, .edit {
+    display: inline-block;
+}
+.edit {
+    margin-left: 5px;
+}
+.edit:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
