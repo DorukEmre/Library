@@ -14,8 +14,7 @@ function addBookToLibrary(title, author, pages, read, ref) {
 
 function displayBook(refNumber) {
     // Find index number in the array based on ref Number
-    const itemToAdd = myLibrary.find(item => item.ref === refNumber);
-    const arrayNumber = myLibrary.indexOf(itemToAdd);
+    const arrayNumber = myLibrary.findIndex(item => item.ref === refNumber)
     
     const section = document.createElement('section');
     section.className = `card`;
@@ -105,8 +104,7 @@ function userAddBook(title, author, pages, read) {
 }
     
 function editReadStatus(refNumber) {
-    const itemToEdit = myLibrary.find(item => item.ref === refNumber);
-    const arrayNumber = myLibrary.indexOf(itemToEdit);
+    const arrayNumber = myLibrary.findIndex(item => item.ref === refNumber)
 
     if (myLibrary[arrayNumber].read === "Yes") {
         myLibrary[arrayNumber].read = "No"
@@ -120,8 +118,7 @@ function editReadStatus(refNumber) {
 }
 
 function deleteCard(refNumber) {
-    const itemToDelete = myLibrary.find(item => item.ref === refNumber);
-    const arrayNumber = myLibrary.indexOf(itemToDelete);
+    const arrayNumber = myLibrary.findIndex(item => item.ref === refNumber)
     myLibrary.splice(arrayNumber, 1)
 
     const cardToDelete = document.querySelector(`[data-ref="${refNumber}"]`);
