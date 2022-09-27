@@ -1,5 +1,40 @@
 let myLibrary = [];
 
+const formBookTitle = document.getElementById('form-title');
+const formBookAuthor = document.getElementById('form-author');
+const formBookPages = document.getElementById('form-pages');
+
+formBookTitle.addEventListener("input", (event) => {
+  formBookTitle.setCustomValidity("");
+  // if (!formBookTitle.validity.valueMissing) {
+  //   formBookTitle.setCustomValidity("");
+  // }  
+});
+
+formBookAuthor.addEventListener("input", (event) => {
+  formBookAuthor.setCustomValidity("");
+  // if (!formBookAuthor.validity.valueMissing) {
+  //   formBookAuthor.setCustomValidity("");
+  // } 
+});
+
+formBookPages.addEventListener("input", (event) => {
+  console.log(formBookPages.validity)
+  console.log(formBookPages.validationMessage)
+
+  
+  formBookPages.setCustomValidity("");
+  
+  if (formBookPages.validity.badInput) {
+    console.log('event listener')
+    formBookPages.setCustomValidity("Use numbers only.");
+  } 
+  // if (!formBookPages.validity.valueMissing && !formBookPages.validity.badInput) {
+  //   formBookPages.setCustomValidity("");
+  // } 
+});
+
+
 function Book(title, author, pages, read, ref) {
     this.title = title
     this.author = author
@@ -85,7 +120,22 @@ function hideAddBookForm() {
     addForm.classList.remove("popup")
 }
 
-function userAddBook(title, author, pages, read) {
+function checkFormValidity() {
+  if (formBookTitle.validity.valueMissing) {
+    formBookTitle.setCustomValidity("Enter a book title.");
+  } else if (formBookAuthor.validity.valueMissing) {
+    formBookAuthor.setCustomValidity("Enter an author name.");
+  } else if (formBookPages.validity.badInput) {
+    console.log('3')
+    formBookPages.setCustomValidity("Use numbers only.");
+  } else if (formBookPages.validity.valueMissing) {
+    formBookPages.setCustomValidity("Enter the number of pages.");
+  } else {
+    userAddBook()
+  }
+}
+
+function userAddBook() {  
     const form = document.getElementById('add-book');
     const titleInput = form.elements['form-title']
     const authorInput = form.elements['form-author']
@@ -101,6 +151,7 @@ function userAddBook(title, author, pages, read) {
     addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value, refNumberOfNewBook);
     displayBook(refNumberOfNewBook);
     hideAddBookForm();
+  
 }
     
 function editReadStatus(refNumber) {
@@ -127,7 +178,7 @@ function deleteCard(refNumber) {
 
 document.querySelector(".add-book-button").addEventListener("click", displayAddBookForm); 
 document.querySelector(".cancel").addEventListener("click", hideAddBookForm); 
-document.querySelector(".submit").addEventListener("click", userAddBook); 
+document.querySelector(".submit").addEventListener("click", checkFormValidity); 
 
 const form = document.querySelector('form');
 
